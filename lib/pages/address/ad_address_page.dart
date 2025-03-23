@@ -9,12 +9,11 @@ import 'package:food_delivery_app/utils/dimensions.dart';
 import 'package:food_delivery_app/widgets/app_text_filed.dart';
 import 'package:food_delivery_app/widgets/big_text.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
 class AddAddressPage extends StatefulWidget {
-  const AddAddressPage({Key? key}) : super(key: key);
+  const AddAddressPage({super.key});
 
   @override
   State<AddAddressPage> createState() => _AddAddressPageState();
@@ -192,7 +191,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        AddressModel _addressModel = AddressModel(
+                        AddressModel addressModel = AddressModel(
                           addressType: locationController.addressTypeList[locationController.addressTypeIndex],
                           contactPersonName: _contactPersonName.text,
                           contacktPersonNumer: _contactPersonNumer.text,
@@ -200,7 +199,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                           latitude: locationController.position.latitude.toString(),
                           longitude: locationController.position.longitude.toString(),
                         );
-                        locationController.addAddress(_addressModel).then((response) {
+                        locationController.addAddress(addressModel).then((response) {
                           if (response.isSuccess) {
                             // Get.back();
                             Get.toNamed(RouteHelper.getInitial());
@@ -212,11 +211,11 @@ class _AddAddressPageState extends State<AddAddressPage> {
                       },
                       child: Container(
                         padding: EdgeInsets.only(top: Dimensions.height20, bottom: Dimensions.height20, right: Dimensions.height20, left: Dimensions.height20),
-                        child: BigText(text: "Save Address", color: Colors.white, size: 26),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(Dimensions.radius20),
                           color: AppColors.mainColor,
                         ),
+                        child: BigText(text: "Save Address", color: Colors.white, size: 26),
                       ),
                     ),
                   ],

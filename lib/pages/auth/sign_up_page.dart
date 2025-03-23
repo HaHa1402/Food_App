@@ -13,7 +13,7 @@ import 'package:food_delivery_app/widgets/big_text.dart';
 import 'package:get/get.dart';
 
 class SigUpPage extends StatelessWidget {
-  const SigUpPage({Key? key}) : super(key: key);
+  const SigUpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class SigUpPage extends StatelessWidget {
       "g.png",
     ];
 
-    void _registration(AuthController authController) {
+    void registration(AuthController authController) {
       // var authController = Get.find<AuthController>();
 
       String name = nameController.text.trim();
@@ -47,6 +47,7 @@ class SigUpPage extends StatelessWidget {
       } else if (password.length < 6) {
         showCustomSnackBar("Password can not be less than six characters", title: "Password");
       } else {
+        //showCustomSnackBar("All went well", title : "Perfect");
         SignUpBody signUpBody = SignUpBody(
           name: name,
           phone: phone,
@@ -54,11 +55,12 @@ class SigUpPage extends StatelessWidget {
           password: password,
         );
         authController.registration(signUpBody).then((status) {
-          if (!status.isSuccess) {
+          if (status.isSuccess) {
             // Get.toNamed(RouteHelper.getInitial());
-            Get.offNamed(RouteHelper.getInitial());
+            //Get.offNamed(RouteHelper.getInitial());
 
             print("Succes registration");
+            Get.offNamed(RouteHelper.getInitial());
           } else {
             showCustomSnackBar(status.message);
           }
@@ -68,15 +70,15 @@ class SigUpPage extends StatelessWidget {
 
     return Scaffold(
         backgroundColor: Colors.white,
-        body: GetBuilder<AuthController>(builder: (_authController) {
-          return !_authController.isLoading
+        body: GetBuilder<AuthController>(builder: (authController) {
+          return !authController.isLoading
               ? SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   child: Column(
                     children: [
                       SizedBox(height: Dimensions.screenHeight * 0.05),
                       //app logo
-                      Container(
+                      SizedBox(
                         height: Dimensions.screenHeight * 0.25,
                         child: Center(
                           child: CircleAvatar(
@@ -101,7 +103,7 @@ class SigUpPage extends StatelessWidget {
                       //Sig Up
                       GestureDetector(
                         onTap: () {
-                          _registration(_authController);
+                          registration(authController);
                         },
                         child: Container(
                           width: Dimensions.screenWeight / 2,
@@ -117,7 +119,7 @@ class SigUpPage extends StatelessWidget {
                       //Have an account alredy?
                       RichText(
                         text: TextSpan(
-                          text: "Have an account alredy?",
+                          text: "Have an account already?",
                           recognizer: TapGestureRecognizer()..onTap = () => Get.back(),
                           style: TextStyle(color: Colors.grey[500], fontSize: Dimensions.font20),
                         ),
@@ -138,14 +140,13 @@ class SigUpPage extends StatelessWidget {
                                   padding: const EdgeInsets.all(8.0),
                                   child: CircleAvatar(
                                     radius: Dimensions.radius30,
-                                    backgroundImage: AssetImage("assets/images/" + sigupImages[index]),
+                                    backgroundImage: AssetImage("assets/images/${sigupImages[index]}"),
                                   ),
                                 )),
                       ),
                     ],
                   ),
-                )
-              : const CustomLoader();
+                ):const CustomLoader();     
         }));
   }
 }

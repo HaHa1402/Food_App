@@ -7,7 +7,7 @@ import 'package:food_delivery_app/widgets/small.text.dart';
 
 
 class MainFoodPage extends StatefulWidget {
-  const MainFoodPage({Key? key}) : super(key: key);
+  const MainFoodPage({super.key});
 
   @override
   State<MainFoodPage> createState() => _MainFoodPageState();
@@ -46,14 +46,14 @@ class _MainFoodPageState extends State<MainFoodPage> {
                       // margin: EdgeInsets.only(top: 45, bottom: 15),
                       height: Dimensions.height45,
                       width: Dimensions.height45,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(Dimensions.radius15),
+                        color: AppColors.mainColor,
+                      ),
                       child: Icon(
                         Icons.search,
                         color: Colors.white,
                         size: Dimensions.iconSize24,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(Dimensions.radius15),
-                        color: AppColors.mainColor,
                       ),
                     ),
                   ),

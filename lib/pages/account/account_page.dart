@@ -13,13 +13,13 @@ import 'package:food_delivery_app/widgets/big_text.dart';
 import 'package:get/get.dart';
 
 class AccountPage extends StatelessWidget {
-  const AccountPage({Key? key}) : super(key: key);
+  const AccountPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     bool defold = false;
-    bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
-    if (_userLoggedIn) {
+    bool userLoggedIn = Get.find<AuthController>().userLoggedIn();
+    if (userLoggedIn) {
       Get.find<UserController>().getUserInfo();
     }
     return Scaffold(
@@ -27,13 +27,12 @@ class AccountPage extends StatelessWidget {
       appBar: AppBar(
         title: BigText(text: "Profile", size: 24, color: Colors.white),
         backgroundColor: AppColors.mainColor,
-      ),
-      // Bu qisimda agar biz ro'yhatdan o'tganmagan bo'lsak Hech narsa chiqmaydi.Biz ro'yhatdan otsak ham server ishlamagani uchun vaqtincha o'chirib defolt ro'yhat yaratamiz
+      ),  
       body: Stack(
         children: [
           GetBuilder<UserController>(
             builder: (userController) {
-              return _userLoggedIn
+              return userLoggedIn
                   ? (userController.isLoading
                       ? Container(
                           width: double.maxFinite,
@@ -76,14 +75,14 @@ class AccountPage extends StatelessWidget {
                                           IconSize: Dimensions.height10 * 5 / 2,
                                           size: Dimensions.height10 * 5,
                                         ),
-                                        bigText: BigText(text: "mansuriosdevm1@gmail.com"),
+                                        bigText: BigText(text: "binhtrong1101@gmail.com"),
                                         // bigText: BigText(text: userController.userModel.email),
                                       ),
                                       SizedBox(height: Dimensions.height20),
                                       //email
                                       GetBuilder<LocationController>(builder: (locationCOntroller) {
                                         // GetBuilder<>
-                                        if (_userLoggedIn && locationCOntroller.addressList.isEmpty) {
+                                        if (userLoggedIn && locationCOntroller.addressList.isEmpty) {
                                           return GestureDetector(
                                             onTap: () {
                                               Get.offNamed(RouteHelper.getAddresssPage());
@@ -195,7 +194,7 @@ class AccountPage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(Dimensions.radius20),
                                   color: AppColors.mainColor,
                                 ),
-                                child: Center(child: BigText(text: "Sig in ", color: Colors.white, size: Dimensions.font26)),
+                                child: Center(child: BigText(text: "Sign in ", color: Colors.white, size: Dimensions.font26)),
                               ),
                             ),
                           ],

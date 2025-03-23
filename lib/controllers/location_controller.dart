@@ -39,8 +39,8 @@ class LocationController extends GetxController implements GetxService {
   int get addressTypeIndex => _addressTypeIndex;
 
   late GoogleMapController _mapController;
-  bool _updateAddressdata = true;
-  bool _changeAddress = true;
+  final bool _updateAddressdata = true;
+  final bool _changeAddress = true;
 
   bool get loading => _loading;
   Position get position => _position;
@@ -68,11 +68,11 @@ class LocationController extends GetxController implements GetxService {
         }
         if (_changeAddress) {
           // google manzil kritilganda bizga beradigan String holatdagi manzil
-          String _address = await getAddressFromGoocode(LatLng(
+          String address = await getAddressFromGoocode(LatLng(
             position.target.latitude,
             position.target.latitude,
           ));
-          fromAddress ? _placemark = Placemark(name: _address) : _pickPlacemark = Placemark(name: _address);
+          fromAddress ? _placemark = Placemark(name: address) : _pickPlacemark = Placemark(name: address);
         }
       } catch (e) {
         print(e.toString());
@@ -81,31 +81,31 @@ class LocationController extends GetxController implements GetxService {
   }
 
   Future<String> getAddressFromGoocode(LatLng latLng) async {
-    String _address = "Unkow Loaction Found";
+    String address = "Unkow Loaction Found";
     Response response = await locationRepo.getAddressFromGoocode(latLng);
     if (response.body["status"] == 'OK') {
-      _address = response.body["results"][0]['formatted_address'].toString();
+      address = response.body["results"][0]['formatted_address'].toString();
       // print("printing addres" + _address);
     } else {
       print("Error getting the google api");
     }
     update();
-    return _address;
+    return address;
   }
 
   late Map<String, dynamic> _getAddress;
   Map get getAddress => _getAddress;
   AddressModel getUseraddress() {
-    late AddressModel _addresModel;
+    late AddressModel addresModel;
 
     //converting map jsonDecode
     _getAddress = jsonDecode(locationRepo.getUserAddress());
     try {
-      _addresModel = AddressModel.fromJson(jsonDecode(locationRepo.getUserAddress()));
+      addresModel = AddressModel.fromJson(jsonDecode(locationRepo.getUserAddress()));
     } catch (e) {
       print(e.toString());
     }
-    return _addresModel;
+    return addresModel;
   }
 
   void setAddressTypeIndex(int index) {

@@ -17,12 +17,12 @@ import 'package:intl/intl.dart';
 
 
 class CartHistory extends StatelessWidget {
-  const CartHistory({Key? key}) : super(key: key);
+  const CartHistory({super.key});
 
   @override
   Widget build(BuildContext context) {
     var getCartHistoryList = Get.find<CartController>().getCartHistoryList().reversed.toList();
-    Map<String, int> cartItemsPerOrder = Map();
+    Map<String, int> cartItemsPerOrder = {};
     for (var i = 0; i < getCartHistoryList.length; i++) {
       if (cartItemsPerOrder.containsKey(getCartHistoryList[i].time)) {
         cartItemsPerOrder.update(getCartHistoryList[i].time!, (value) => ++value);
@@ -53,7 +53,6 @@ class CartHistory extends StatelessWidget {
       return BigText(text: outputDate);
     }
 
-    ;
 
     return Scaffold(
       body: Column(
@@ -71,9 +70,9 @@ class CartHistory extends StatelessWidget {
               ],
             ),
           ),
-          GetBuilder<CartController>(builder: (_cartController) {
-            var cartLength = _cartController.getCartHistoryList();
-            return cartLength.length > 0
+          GetBuilder<CartController>(builder: (cartController) {
+            var cartLength = cartController.getCartHistoryList();
+            return cartLength.isNotEmpty
                 ? Expanded(
                     child: Container(
                       // height: 500,
@@ -119,14 +118,14 @@ class CartHistory extends StatelessWidget {
                                                 : Container();
                                           }),
                                         ),
-                                        Container(
+                                        SizedBox(
                                           height: Dimensions.height20 * 4,
                                           child: Column(
                                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
                                               SmallText(text: "Total", color: AppColors.titleColor),
-                                              BigText(text: itemsPerOrder[i].toString() + "Items", color: AppColors.titleColor),
+                                              BigText(text: "${itemsPerOrder[i]}Items", color: AppColors.titleColor),
                                               GestureDetector(
                                                 onTap: () {
                                                   var orderTime = cartOrderTimeToList();
@@ -163,7 +162,7 @@ class CartHistory extends StatelessWidget {
                       ),
                     ),
                   )
-                : Container(height: MediaQuery.of(context).size.height / 1.5, child: Center(child: const NoDataPage(text: "Bạn vẫn chưa mua gì cả!", imgPath: "assets/images/empty_box.png")));
+                : SizedBox(height: MediaQuery.of(context).size.height / 1.5, child: Center(child: const NoDataPage(text: "Bạn vẫn chưa mua gì cả!", imgPath: "assets/images/empty_box.png")));
           })
         ],
       ),

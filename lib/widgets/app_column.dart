@@ -8,7 +8,7 @@ import 'package:food_delivery_app/widgets/small.text.dart';
   //ten tieu de+ thanh gioi thieu
 class AppColumn extends StatelessWidget {
   final String text;
-  const AppColumn({Key? key, required this.text}) : super(key: key);
+  const AppColumn({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {

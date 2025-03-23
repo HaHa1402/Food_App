@@ -14,7 +14,7 @@ import 'package:food_delivery_app/widgets/small.text.dart';
 import 'package:get/get.dart';
 
 class FoodPageBody extends StatefulWidget {
-  const FoodPageBody({Key? key}) : super(key: key);
+  const FoodPageBody({super.key});
 
   @override
   State<FoodPageBody> createState() => _FoodPageBodyState();
@@ -23,8 +23,8 @@ class FoodPageBody extends StatefulWidget {
 class _FoodPageBodyState extends State<FoodPageBody> {
   PageController pageController = PageController(viewportFraction: 0.85);
   var _currPageValue = 0.0;
-  var _scaleFactor = 0.8;
-  double _height = Dimensions.pageViewContainer;
+  final _scaleFactor = 0.8;
+  final double _height = Dimensions.pageViewContainer;
 
   @override
   void initState() {
@@ -51,7 +51,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
         GetBuilder<PopularProductController>(
           builder: (popularProducts) {
             return popularProducts.isLoaded
-                ? Container(
+                ? SizedBox(
                   height: Dimensions.pageView,
                   //kich vao hinh chuyen den trang chi tiet (GestureDetector đã có wiget)
                   child: PageView.builder(
@@ -236,7 +236,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
   }
 
   Widget _buildPageItem(int index, ProductModel popularProduc) {
-    Matrix4 matrix4 = new Matrix4.identity();
+    Matrix4 matrix4 = Matrix4.identity();
     if (index == _currPageValue.floor()) {
       var currScale = 1 - (_currPageValue - index) * (1 - _scaleFactor);
       var currTrans = _height * (1 - currScale) / 2;

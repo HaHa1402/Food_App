@@ -1,4 +1,3 @@
-import 'package:flutter/rendering.dart';
 import 'package:food_delivery_app/utils/app_constants.dart';
 
 import 'package:get/get.dart';

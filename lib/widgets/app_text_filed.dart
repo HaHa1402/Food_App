@@ -8,7 +8,7 @@ class AppTextFiled extends StatelessWidget {
   final String hintText;
   final IconData icon;
   bool isObscure;
-  AppTextFiled({Key? key, required this.textEditingController, required this.hintText, required this.icon, this.isObscure = false}) : super(key: key);
+  AppTextFiled({super.key, required this.textEditingController, required this.hintText, required this.icon, this.isObscure = false});
 
   @override
   Widget build(BuildContext context) {

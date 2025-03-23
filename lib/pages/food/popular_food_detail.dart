@@ -15,8 +15,7 @@ import 'package:get/get.dart';
 class PopularFoodDetail extends StatelessWidget {
   final int pageId;
   final String page;
-  const PopularFoodDetail({Key? key, required this.pageId, required this.page})
-    : super(key: key);
+  const PopularFoodDetail({super.key, required this.pageId, required this.page});
 
   @override
   Widget build(BuildContext context) {
@@ -224,16 +223,16 @@ class PopularFoodDetail extends StatelessWidget {
                       right: 5,
                       left: 15,
                     ),
+
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(Dimensions.radius15),
+                      color: AppColors.mainColor,
+                    ),
                 
                     child: Text(
                       "${NumberFormat("#,###", "vi_VN").format(product.price! * 1000)} vnđ\nThêm vào giỏ hàng",
                       style: TextStyle(color: Colors.white, fontSize: 17),
                       textAlign: TextAlign.center, // Căn giữa nội dung
-                    ),
-
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(Dimensions.radius15),
-                      color: AppColors.mainColor,
                     ),
                   ),
                 ),

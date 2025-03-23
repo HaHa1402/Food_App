@@ -11,12 +11,12 @@ class BigText extends StatelessWidget {
   TextOverflow overflow;
 
   BigText({
-    Key? key,
+    super.key,
     this.color = const Color(0xFF332d2b),
     required this.text,
     this.size = 0,
     this.overflow = TextOverflow.ellipsis, // widget ichiga siqmay qolsa .. nuqta qo'yib beradi
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

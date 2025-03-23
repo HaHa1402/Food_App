@@ -17,13 +17,13 @@ class RouteHelper {
   static const String sigIn = "/sign-in";
   static const String addAddress = "/add-address";
 
-  static String getSplashPage() => '$splashPage';
-  static String getInitial() => '$initial';
+  static String getSplashPage() => splashPage;
+  static String getInitial() => initial;
   static String getPopularFood(int pageId, String page) => '$popularFood?pageId=$pageId&page=$page';
   static String getRecommendedFood(int pageId, String page) => '$recommendeFood?pageId=$pageId&page=$page';
-  static String getCartPage() => '$cartPage';
-  static String getsigInPage() => '$sigIn';
-  static String getAddresssPage() => '$addAddress';
+  static String getCartPage() => cartPage;
+  static String getsigInPage() => sigIn;
+  static String getAddresssPage() => addAddress;
 
   static List<GetPage> routes = [
     GetPage(name: splashPage, page: () => SplashScreen()),

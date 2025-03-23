@@ -15,16 +15,21 @@ class AuthRepo {
     required this.apiClent,
     required this.sharedPreferences,
   });
+
+  // registration(SignUpBody signUpBody) {
+  //   apiClent.posData(AppConstants.REGISTRATION_URI, signUpBody.toJson());
+  // }
   Future<Response> registration(SignUpBody signUpBody) async {
     return await apiClent.posData(AppConstants.REGISTRATION_URI, signUpBody.toJson());
   }
+
 
   bool userLoggedIn() {
     return sharedPreferences.containsKey(AppConstants.TOKEN);
   }
 
   Future<String> getUserToken() async {
-    return await sharedPreferences.getString(AppConstants.TOKEN) ?? "None";
+    return sharedPreferences.getString(AppConstants.TOKEN) ?? "None";
   }
 
   Future<Response> login(String email, String passord) async {
@@ -42,11 +47,11 @@ class AuthRepo {
       await sharedPreferences.setString(AppConstants.PHONE, numer);
       await sharedPreferences.setString(AppConstants.PASSWORD, password);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
-  bool clearShared() {
+  bool clearSharedData() {
     sharedPreferences.remove(AppConstants.TOKEN);
     sharedPreferences.remove(AppConstants.PASSWORD);
     sharedPreferences.remove(AppConstants.PHONE);

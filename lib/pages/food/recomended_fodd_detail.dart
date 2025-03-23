@@ -16,8 +16,7 @@ import 'package:intl/intl.dart';
 class RecomendFoodDetail extends StatelessWidget {
   final int pageId;
   final String page;
-  RecomendFoodDetail({Key? key, required this.pageId, required this.page})
-    : super(key: key);
+  const RecomendFoodDetail({super.key, required this.pageId, required this.page});
 
   @override
   Widget build(BuildContext context) {
@@ -97,9 +96,6 @@ class RecomendFoodDetail extends StatelessWidget {
             bottom: PreferredSize(
               preferredSize: Size.fromHeight(20),
               child: Container(
-                child: Center(
-                  child: BigText(text: product.name!, size: Dimensions.font26),
-                ),
                 width: double.maxFinite,
                 padding: EdgeInsets.only(top: 5, bottom: 10),
                 decoration: BoxDecoration(
@@ -108,6 +104,9 @@ class RecomendFoodDetail extends StatelessWidget {
                     topLeft: Radius.circular(Dimensions.radius20),
                     topRight: Radius.circular(Dimensions.radius20),
                   ),
+                ),
+                child: Center(
+                  child: BigText(text: product.name!, size: Dimensions.font26),
                 ),
               ),
             ),
@@ -226,17 +225,17 @@ class RecomendFoodDetail extends StatelessWidget {
                           right: Dimensions.height15,
                           left: Dimensions.height15,
                         ),
-                        child: BigText(
-                          text: "Thêm vào giỏ hàng",
-                          color: Colors.white,
-                          size: Dimensions.font20,
-                        ),
 
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
                             Dimensions.radius20,
                           ),
                           color: AppColors.mainColor,
+                        ),
+                        child: BigText(
+                          text: "Thêm vào giỏ hàng",
+                          color: Colors.white,
+                          size: Dimensions.font20,
                         ),
                       ),
                     ),

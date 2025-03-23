@@ -13,19 +13,19 @@ import 'package:food_delivery_app/widgets/big_text.dart';
 import 'package:get/get.dart';
 
 class SignInPage extends StatelessWidget {
-  const SignInPage({Key? key}) : super(key: key);
+  const SignInPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var phoneController = TextEditingController();
+    var emailController = TextEditingController();
     var passwordController = TextEditingController();
-    void _login(AuthController authController) {
+    void login(AuthController authController) {
       // var authController = Get.find<AuthController>();
-      String phone = phoneController.text.trim();
+      String email = emailController.text.trim();
       String password = passwordController.text.trim();
-      if (phone.isEmpty) {
+      if (email.isEmpty) {
         showCustomSnackBar("Type in your email adress", title: "Email adress");
-      } else if (!GetUtils.isEmail(phone)) {
+      } else if (!GetUtils.isEmail(email)) {
         showCustomSnackBar(
           "Type in a valid email adress",
           title: "Valid email adress",
@@ -38,7 +38,7 @@ class SignInPage extends StatelessWidget {
           title: "Password",
         );
       } else {
-        authController.login(phone, password).then((status) {
+        authController.login(email, password).then((status) {
           if (!status.isSuccess) {
             Get.toNamed(RouteHelper.getInitial());
             // Get.toNamed(RouteHelper.getCartPage());
@@ -63,7 +63,7 @@ class SignInPage extends StatelessWidget {
                   children: [
                     SizedBox(height: Dimensions.screenHeight * 0.05),
                     //app logo
-                    Container(
+                    SizedBox(
                       height: Dimensions.screenHeight * 0.25,
                       child: Center(
                         child: CircleAvatar(
@@ -114,7 +114,7 @@ class SignInPage extends StatelessWidget {
                     SizedBox(height: Dimensions.screenHeight * 0.05),
                     //email
                     AppTextFiled(
-                      textEditingController: phoneController,
+                      textEditingController: emailController,
                       hintText: "Email",
                       icon: Icons.email,
                     ),
@@ -151,7 +151,7 @@ class SignInPage extends StatelessWidget {
                     //sigin
                     GestureDetector(
                       onTap: () {
-                        _login(authController);
+                        login(authController);
                       },
                       child: Container(
                         width: Dimensions.screenWeight / 2,

@@ -17,7 +17,7 @@ import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 
 class CartPage extends StatelessWidget {
-  const CartPage({Key? key}) : super(key: key);
+  const CartPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +65,8 @@ class CartPage extends StatelessWidget {
             ),
           ),
           GetBuilder<CartController>(
-            builder: (_cartController) {
-              return _cartController.getItems.length > 0
+            builder: (cartController) {
+              return cartController.getItems.isNotEmpty
                   ? Positioned(
                     top: Dimensions.height20 * 5,
                     left: Dimensions.width20,
@@ -80,11 +80,11 @@ class CartPage extends StatelessWidget {
                         removeTop: true,
                         child: GetBuilder<CartController>(
                           builder: (cartController) {
-                            var _cartList = cartController.getItems;
+                            var cartList = cartController.getItems;
                             return ListView.builder(
-                              itemCount: _cartList.length,
+                              itemCount: cartList.length,
                               itemBuilder: (_, index) {
-                                return Container(
+                                return SizedBox(
                                   width: double.maxFinite,
                                   height: Dimensions.height20 * 5,
                                   child: Row(
@@ -96,7 +96,7 @@ class CartPage extends StatelessWidget {
                                               >()
                                               .popularProductList
                                               .indexOf(
-                                                _cartList[index].product!,
+                                                cartList[index].product!,
                                               );
                                           if (popularIndex >= 0) {
                                             Get.toNamed(
@@ -111,7 +111,7 @@ class CartPage extends StatelessWidget {
                                                 >()
                                                 .recommendedProductList
                                                 .indexOf(
-                                                  _cartList[index].product!,
+                                                  cartList[index].product!,
                                                 );
                                             if (recommendedIndex < 0) {
                                               Get.snackbar(
@@ -157,7 +157,7 @@ class CartPage extends StatelessWidget {
                                       ),
                                       SizedBox(width: Dimensions.width10),
                                       Expanded(
-                                        child: Container(
+                                        child: SizedBox(
                                           height: Dimensions.height20 * 5,
                                           child: Column(
                                             crossAxisAlignment:
@@ -206,7 +206,7 @@ class CartPage extends StatelessWidget {
                                                           onTap: () {
                                                             cartController
                                                                 .addItem(
-                                                                  _cartList[index]
+                                                                  cartList[index]
                                                                       .product!,
                                                                   -1,
                                                                 );
@@ -226,7 +226,7 @@ class CartPage extends StatelessWidget {
                                                         ),
                                                         BigText(
                                                           text:
-                                                              _cartList[index]
+                                                              cartList[index]
                                                                   .quantity
                                                                   .toString(),
                                                         ), //popularProduct.ionCartItems.toString(), color: AppColors.mainBlackColor),
@@ -240,7 +240,7 @@ class CartPage extends StatelessWidget {
                                                           onTap: () {
                                                             cartController
                                                                 .addItem(
-                                                                  _cartList[index]
+                                                                  cartList[index]
                                                                       .product!,
                                                                   1,
                                                                 );
@@ -295,7 +295,7 @@ class CartPage extends StatelessWidget {
               ),
             ),
             child:
-                cartController.getItems.length > 0
+                cartController.getItems.isNotEmpty
                     ? Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -351,15 +351,15 @@ class CartPage extends StatelessWidget {
                               right: Dimensions.height20,
                               left: Dimensions.height20,
                             ),
-                            child: BigText(
-                              text: " Đặt món",
-                              color: Colors.white,
-                            ),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(
                                 Dimensions.radius20,
                               ),
                               color: AppColors.mainColor,
+                            ),
+                            child: BigText(
+                              text: " Đặt món",
+                              color: Colors.white,
                             ),
                           ),
                         ),

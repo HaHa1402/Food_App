@@ -7,7 +7,7 @@ import 'package:food_delivery_app/utils/colors.dart';
 
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -18,6 +18,7 @@ class _HomePageState extends State<HomePage> {
 
   List pages = [
     MainFoodPage(),
+    Container(child: Text("History page"),),
     SignInPage(),
     CartHistory(),
     AccountPage(),
