@@ -35,17 +35,17 @@ class SigUpPage extends StatelessWidget {
       String email = emialController.text.trim();
       String password = passwordController.text.trim();
       if (name.isEmpty) {
-        showCustomSnackBar("Type in your name", title: "Name");
+        showCustomSnackBar("Nhập tên của bạn", title: "Tên");
       } else if (phone.isEmpty) {
-        showCustomSnackBar("Type in phone name", title: "Phone numer");
+        showCustomSnackBar("Nhập tên điện thoại", title: "Số điện thoại");
       } else if (email.isEmpty) {
-        showCustomSnackBar("Type in your email adress", title: "Email adress");
+        showCustomSnackBar("Nhập địa chỉ email của bạn", title: "Địa chỉ email");
       } else if (!GetUtils.isEmail(email)) {
-        showCustomSnackBar("Type in a valid email adress", title: "Valid email adress");
+        showCustomSnackBar("Nhập địa chỉ email hợp lệ", title: "Địa chỉ email hợp lệ");
       } else if (password.isEmpty) {
-        showCustomSnackBar("Type in your password", title: "password");
+        showCustomSnackBar("Nhập mật khẩu của bạn", title: "mật khẩu");
       } else if (password.length < 6) {
-        showCustomSnackBar("Password can not be less than six characters", title: "Password");
+        showCustomSnackBar("Mật khẩu không được ít hơn sáu ký tự", title: "Mật khẩu");
       } else {
         SignUpBody signUpBody = SignUpBody(
           name: name,
@@ -58,7 +58,7 @@ class SigUpPage extends StatelessWidget {
             // Get.toNamed(RouteHelper.getInitial());
             Get.offNamed(RouteHelper.getInitial());
 
-            print("Succes registration");
+            print("Đăng ký thành công");
           } else {
             showCustomSnackBar(status.message);
           }
@@ -90,13 +90,13 @@ class SigUpPage extends StatelessWidget {
                       AppTextFiled(textEditingController: emialController, hintText: "Email", icon: Icons.email),
                       SizedBox(height: Dimensions.height20),
                       //password
-                      AppTextFiled(textEditingController: passwordController, hintText: "Password", icon: Icons.password_sharp, isObscure: true),
+                      AppTextFiled(textEditingController: passwordController, hintText: "Mật khẩu", icon: Icons.password_sharp, isObscure: true),
                       SizedBox(height: Dimensions.height20),
                       //Name
-                      AppTextFiled(textEditingController: nameController, hintText: "Name", icon: Icons.person),
+                      AppTextFiled(textEditingController: nameController, hintText: "Tên", icon: Icons.person),
                       SizedBox(height: Dimensions.height20),
                       //Phone
-                      AppTextFiled(textEditingController: phoneController, hintText: "Phone", icon: Icons.phone),
+                      AppTextFiled(textEditingController: phoneController, hintText: "Điện thoại", icon: Icons.phone),
                       SizedBox(height: Dimensions.height20),
                       //Sig Up
                       GestureDetector(
@@ -110,14 +110,14 @@ class SigUpPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(Dimensions.radius30),
                             color: AppColors.mainColor,
                           ),
-                          child: Center(child: BigText(text: "Sign Up", size: Dimensions.font20 + Dimensions.font20 / 2, color: Colors.white)),
+                          child: Center(child: BigText(text: "Đăng ký", size: Dimensions.font20 + Dimensions.font20 / 2, color: Colors.white)),
                         ),
                       ),
                       SizedBox(height: Dimensions.height10),
                       //Have an account alredy?
                       RichText(
                         text: TextSpan(
-                          text: "Have an account alredy?",
+                          text: "Bạn đã có tài khoản chưa?",
                           recognizer: TapGestureRecognizer()..onTap = () => Get.back(),
                           style: TextStyle(color: Colors.grey[500], fontSize: Dimensions.font20),
                         ),
@@ -127,7 +127,7 @@ class SigUpPage extends StatelessWidget {
                       //sigup options
                       RichText(
                         text: TextSpan(
-                          text: "Sign up using one of the following methods?",
+                          text: "Đăng ký bằng một trong những phương pháp sau?",
                           style: TextStyle(color: Colors.grey[500], fontSize: Dimensions.font16),
                         ),
                       ),

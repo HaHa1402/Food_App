@@ -24,18 +24,18 @@ class SignInPage extends StatelessWidget {
       String phone = phoneController.text.trim();
       String password = passwordController.text.trim();
       if (phone.isEmpty) {
-        showCustomSnackBar("Type in your email adress", title: "Email adress");
+        showCustomSnackBar("Nhập địa chỉ email của bạn", title: "Địa chỉ email");
       } else if (!GetUtils.isEmail(phone)) {
         showCustomSnackBar(
-          "Type in a valid email adress",
-          title: "Valid email adress",
+          "Nhập địa chỉ email hợp lệ",
+          title: "Địa chỉ email hợp lệ",
         );
       } else if (password.isEmpty) {
-        showCustomSnackBar("Type in your password", title: "password");
+        showCustomSnackBar("Nhập mật khẩu của bạn", title: "mật khẩu");
       } else if (password.length < 6) {
         showCustomSnackBar(
-          "Password can not be less than six characters",
-          title: "Password",
+          "Mật khẩu không được ít hơn sáu ký tự",
+          title: "Mật khẩu",
         );
       } else {
         authController.login(phone, password).then((status) {
@@ -43,7 +43,7 @@ class SignInPage extends StatelessWidget {
             Get.toNamed(RouteHelper.getInitial());
             // Get.toNamed(RouteHelper.getCartPage());
             // Get.offAllNamed(RouteHelper.getInitial());
-            print("Succes registration");
+            print("Đăng ký thành công");
           } else {
             showCustomSnackBar(status.message);
           }
@@ -86,7 +86,7 @@ class SignInPage extends StatelessWidget {
                               CrossAxisAlignment.center, // Căn giữa các text
                           children: [
                             Text(
-                              "Hello",
+                              "Xin chào",
                               style: TextStyle(
                                 fontSize:
                                     Dimensions.font20 * 3 +
@@ -99,7 +99,7 @@ class SignInPage extends StatelessWidget {
                               height: Dimensions.height10,
                             ), // Khoảng cách giữa 2 dòng
                             Text(
-                              "Sign into your account",
+                              "Đăng nhập vào tài khoản của bạn",
                               style: TextStyle(
                                 fontSize: Dimensions.font20,
                                 color: Colors.grey[500],
@@ -122,7 +122,7 @@ class SignInPage extends StatelessWidget {
                     //password
                     AppTextFiled(
                       textEditingController: passwordController,
-                      hintText: "Password",
+                      hintText: "Mật khẩu",
                       icon: Icons.password,
                       isObscure: true,
                     ),
@@ -136,7 +136,7 @@ class SignInPage extends StatelessWidget {
                         Expanded(child: Container()),
                         RichText(
                           text: TextSpan(
-                            text: "Sign into your account",
+                            text: "Đăng nhập vào tài khoản của bạn",
                             style: TextStyle(
                               color: Colors.grey[500],
                               fontSize: Dimensions.font20,
@@ -164,7 +164,7 @@ class SignInPage extends StatelessWidget {
                         ),
                         child: Center(
                           child: BigText(
-                            text: "Sign In",
+                            text: "Đăng nhập",
                             size: Dimensions.font20 + Dimensions.font20 / 2,
                             color: Colors.white,
                           ),
@@ -175,7 +175,7 @@ class SignInPage extends StatelessWidget {
 
                     RichText(
                       text: TextSpan(
-                        text: "Don't an account?",
+                        text: "Không có tài khoản?",
                         style: TextStyle(
                           color: Colors.grey[500],
                           fontSize: Dimensions.font20,
@@ -189,7 +189,7 @@ class SignInPage extends StatelessWidget {
                                         () => SigUpPage(),
                                         transition: Transition.fade,
                                       ),
-                            text: " Create?",
+                            text: " Tạo tài khoản?",
                             style: TextStyle(
                               color: AppColors.mainBlackColor,
                               fontSize: Dimensions.font20,
