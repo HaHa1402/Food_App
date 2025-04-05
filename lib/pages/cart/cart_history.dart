@@ -66,7 +66,7 @@ class CartHistory extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                BigText(text: "Cart History", color: Colors.white),
+                BigText(text: "Lịch sử mua hàng", color: Colors.white),
                 AppIcon(icon: Icons.shopping_cart_outlined, iconColor: AppColors.mainColor, backgroundColor: AppColors.yellowColor),
               ],
             ),
@@ -125,7 +125,7 @@ class CartHistory extends StatelessWidget {
                                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
-                                              SmallText(text: "Total", color: AppColors.titleColor),
+                                              SmallText(text: "Tổng cộng", color: AppColors.titleColor),
                                               BigText(text: itemsPerOrder[i].toString() + "Items", color: AppColors.titleColor),
                                               GestureDetector(
                                                 onTap: () {
@@ -147,7 +147,7 @@ class CartHistory extends StatelessWidget {
                                                     borderRadius: BorderRadius.circular(Dimensions.radius15),
                                                     border: Border.all(width: 1, color: AppColors.mainColor),
                                                   ),
-                                                  child: SmallText(text: "one more", color: AppColors.mainColor),
+                                                  child: SmallText(text: "xem thêm", color: AppColors.mainColor),
                                                 ),
                                               ),
                                             ],

@@ -102,7 +102,7 @@ class CartPage extends StatelessWidget {
                                             Get.toNamed(
                                               RouteHelper.getPopularFood(
                                                 popularIndex,
-                                                "cartpage",
+                                                "Trang giỏ hàng",
                                               ),
                                             );
                                           } else {
@@ -115,8 +115,8 @@ class CartPage extends StatelessWidget {
                                                 );
                                             if (recommendedIndex < 0) {
                                               Get.snackbar(
-                                                "History product",
-                                                "Product review is not availble for history product!",
+                                                "Lịch sử mua hàng",
+                                                "Đánh giá sản phẩm không khả dụng cholịch sử mau hàng!",
                                                 backgroundColor:
                                                     AppColors.mainColor,
                                                 colorText: Colors.white,
@@ -125,7 +125,7 @@ class CartPage extends StatelessWidget {
                                               Get.toNamed(
                                                 RouteHelper.getRecommendedFood(
                                                   recommendedIndex,
-                                                  "cartpage",
+                                                  "Trang giỏ hàng",
                                                 ),
                                               );
                                             }
@@ -172,7 +172,7 @@ class CartPage extends StatelessWidget {
                                                         .name!,
                                                 color: Colors.black54,
                                               ),
-                                              SmallText(text: "Spicy"),
+                                              SmallText(text: "Cay"),
                                               Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
@@ -272,7 +272,7 @@ class CartPage extends StatelessWidget {
                       ),
                     ),
                   )
-                  : NoDataPage(text: "Your cart is emty!");
+                  : NoDataPage(text: "Giỏ hàng của bạn đã trống!");
             },
           ),
         ],
