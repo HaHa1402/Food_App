@@ -1,3 +1,15 @@
+// 🆕 Thêm block buildscript vào đầu file:
+buildscript {
+    dependencies {
+        classpath("com.google.gms:google-services:4.4.2")
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+// Phần còn lại giữ nguyên
 allprojects {
     repositories {
         google()
@@ -12,6 +24,7 @@ subprojects {
     val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
     project.layout.buildDirectory.value(newSubprojectBuildDir)
 }
+
 subprojects {
     project.evaluationDependsOn(":app")
 }

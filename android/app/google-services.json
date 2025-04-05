@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "909699046116",
+    "project_id": "foodapp-6d9cb",
+    "storage_bucket": "foodapp-6d9cb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:909699046116:android:a3b4b1dd52ff45ea282af1",
+        "android_client_info": {
+          "package_name": "com.example.food_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAp8t1wV8jUbWdt5htxEKglvTGq9AHXnIo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
