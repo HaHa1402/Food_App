@@ -292,6 +292,9 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             ),
           ),
          
+
+
+         
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
@@ -329,8 +332,8 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // ? Chinese Slide
-                    BigText(text: popularProduc.name!),
+                     BigText(text: "🥤 Món bán chạy nhất🍜", size: Dimensions.font20),
+               
                     SizedBox(height: Dimensions.height10),
                     // ? tiện ích ngang
                     Row(
