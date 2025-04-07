@@ -54,7 +54,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Address Page"),
+        title: Text("Trang Địa Chỉ "),
         backgroundColor: AppColors.mainColor,
       ),
       body: GetBuilder<UserController>(
@@ -153,17 +153,17 @@ class _AddAddressPageState extends State<AddAddressPage> {
                       ),
                     ),
                     SizedBox(height: Dimensions.height20),
-                    Padding(padding: EdgeInsets.only(left: Dimensions.width20), child: BigText(text: "Delivery Address")),
+                    Padding(padding: EdgeInsets.only(left: Dimensions.width20), child: BigText(text: "Địa chỉ giao hàng")),
                     SizedBox(height: Dimensions.height10),
-                    AppTextFiled(textEditingController: _addressController, hintText: "Your adress", icon: Icons.map),
+                    AppTextFiled(textEditingController: _addressController, hintText: "Địa chỉ của bạn", icon: Icons.map),
                     SizedBox(height: Dimensions.height20),
-                    Padding(padding: EdgeInsets.only(left: Dimensions.width20), child: BigText(text: "Contact Name")),
+                    Padding(padding: EdgeInsets.only(left: Dimensions.width20), child: BigText(text: "Tên liên hệ")),
                     SizedBox(height: Dimensions.height10),
-                    AppTextFiled(textEditingController: _contactPersonName, hintText: "Your name", icon: Icons.map),
+                    AppTextFiled(textEditingController: _contactPersonName, hintText: "Tên của bạn", icon: Icons.map),
                     SizedBox(height: Dimensions.height10),
-                    Padding(padding: EdgeInsets.only(left: Dimensions.width20), child: BigText(text: "Your numer")),
+                    Padding(padding: EdgeInsets.only(left: Dimensions.width20), child: BigText(text: "Số của bạn")),
                     SizedBox(height: Dimensions.height10),
-                    AppTextFiled(textEditingController: _contactPersonNumer, hintText: "Your address", icon: Icons.map),
+                    AppTextFiled(textEditingController: _contactPersonNumer, hintText: "Địa chỉ của bạn", icon: Icons.map),
                     SizedBox(height: Dimensions.height20),
                   ],
                 ),
@@ -204,15 +204,15 @@ class _AddAddressPageState extends State<AddAddressPage> {
                           if (response.isSuccess) {
                             // Get.back();
                             Get.toNamed(RouteHelper.getInitial());
-                            Get.snackbar("Addres", "Added Successfully");
+                            Get.snackbar("Địa chỉ", "Đã thêm thành công");
                           } else {
-                            Get.snackbar("Addres", "Couldn't save address");
+                            Get.snackbar("Địa chỉ", "Không thể lưu địa chỉ");
                           }
                         });
                       },
                       child: Container(
                         padding: EdgeInsets.only(top: Dimensions.height20, bottom: Dimensions.height20, right: Dimensions.height20, left: Dimensions.height20),
-                        child: BigText(text: "Save Address", color: Colors.white, size: 26),
+                        child: BigText(text: "Lưu Địa Chỉ", color: Colors.white, size: 26),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(Dimensions.radius20),
                           color: AppColors.mainColor,

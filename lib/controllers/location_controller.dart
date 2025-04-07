@@ -124,7 +124,7 @@ class LocationController extends GetxController implements GetxService {
       responseModel = ResponseModel(false, message);
       await saveUserAddress(addressModel);
     } else {
-      print("culdn't save the addres");
+      print("couldn't save the addres");
       responseModel = ResponseModel(false, response.statusText!);
     }
     update();

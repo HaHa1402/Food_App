@@ -17,12 +17,19 @@ allprojects {
     }
 }
 
-val newBuildDir: Directory = rootProject.layout.buildDirectory.dir("../../build").get()
-rootProject.layout.buildDirectory.value(newBuildDir)
+rootProject.buildDir = File(rootDir, "../build")
 
 subprojects {
-    val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
-    project.layout.buildDirectory.value(newSubprojectBuildDir)
+    project.buildDir = File(rootProject.buildDir, project.name)
+
+    val newSubprojectBuildDir = project.buildDir
+    // Nếu bạn cần xài newSubprojectBuildDir ở đâu đó thì dùng biến này.
+}
+
+rootProject.buildDir = File(rootDir, "../build")
+
+subprojects {
+    project.buildDir = File(rootProject.buildDir, project.name)
 }
 
 subprojects {
