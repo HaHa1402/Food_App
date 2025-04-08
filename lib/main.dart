@@ -12,6 +12,9 @@ import 'package:food_delivery_app/widgets/const.dart';
 import 'package:get/get.dart';
 import 'helper/dependeccies.dart' as dep;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'firebase_options.dart';
+
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +32,12 @@ Future<void> main() async {
   Stripe.publishableKey = stripePublishableKey;
   await Stripe.instance.applySettings(); // Đảm bảo cấu hình Stripe được áp dụng
 
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
+await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
+
+
   await dep.init();
   runApp(const MyApp());
 }
@@ -46,7 +54,7 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: "Flutter Demo",
-          home: HomePage(),
+          // home: HomePage(),
 
           //  home: PopularFoodDetail());
       // home: RecommenededFoodDetail());

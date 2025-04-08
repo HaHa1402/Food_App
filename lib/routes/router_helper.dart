@@ -1,4 +1,6 @@
 
+
+
 import 'package:food_delivery_app/pages/address/ad_address_page.dart';
 import 'package:food_delivery_app/pages/auth/sign_in_page.dart';
 import 'package:food_delivery_app/pages/cart/cart_page.dart';
@@ -9,26 +11,34 @@ import 'package:food_delivery_app/pages/splash/splash_page.dart';
 import 'package:get/get.dart';
 
 class RouteHelper {
+  // Route names
   static const String splashPage = "/splash-page";
   static const String initial = "/";
   static const String popularFood = "/popular-food";
-  static const String recommendeFood = "/recommended-food";
+  static const String recommendedFood = "/recommended-food";
   static const String cartPage = "/cart-page";
-  static const String sigIn = "/sign-in";
+  static const String signIn = "/sign-in";
   static const String addAddress = "/add-address";
 
-  static String getSplashPage() => '$splashPage';
-  static String getInitial() => '$initial';
+  // Route generators
+  static String getSplashPage() => splashPage;
+  static String getInitial() => initial;
   static String getPopularFood(int pageId, String page) => '$popularFood?pageId=$pageId&page=$page';
-  static String getRecommendedFood(int pageId, String page) => '$recommendeFood?pageId=$pageId&page=$page';
-  static String getCartPage() => '$cartPage';
-  static String getsigInPage() => '$sigIn';
+  static String getRecommendedFood(int pageId, String page) => '$recommendedFood?pageId=$pageId&page=$page';
+  static String getCartPage() => cartPage;
+  static String getSignInPage() => signIn;
+  // static String getAddressPage() => addAddress;
   static String getAddresssPage() => '$addAddress';
 
+
+  // Routes list
   static List<GetPage> routes = [
-    GetPage(name: splashPage, page: () => SplashScreen()),
-    GetPage(name: initial, page: () => HomePage(), transition: Transition.fade),
-    GetPage(name: sigIn, page: () => SignInPage(), transition: Transition.fade),
+    GetPage(name: splashPage, page: () => const SplashScreen()),
+
+    GetPage(name: initial, page: () => const HomePage(), transition: Transition.fade),
+
+    GetPage(name: signIn, page: () => const SignInPage(), transition: Transition.fade),
+
     GetPage(
       name: popularFood,
       page: () {
@@ -38,8 +48,9 @@ class RouteHelper {
       },
       transition: Transition.fadeIn,
     ),
+
     GetPage(
-      name: recommendeFood,
+      name: recommendedFood,
       page: () {
         var pageId = Get.parameters['pageId'];
         var page = Get.parameters['page'];
@@ -47,17 +58,16 @@ class RouteHelper {
       },
       transition: Transition.fadeIn,
     ),
+
     GetPage(
       name: cartPage,
-      page: () {
-        return CartPage();
-      },
+      page: () => const CartPage(),
       transition: Transition.fadeIn,
     ),
+
     GetPage(
-        name: addAddress,
-        page: () {
-          return AddAddressPage();
-        })
+      name: addAddress,
+      page: () => const AddAddressPage(),
+    ),
   ];
 }
