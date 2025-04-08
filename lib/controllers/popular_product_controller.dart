@@ -50,7 +50,7 @@ class PopularProductController extends GetxController {
   int checkQuantity(int quantity) {
     if ((_ionCartItems + quantity) < 0) {
       // Xabar beradi.20 dan kam bolsa
-      Get.snackbar("Item count", "You can't reduce more !", backgroundColor: AppColors.mainColor, colorText: Colors.white);
+      Get.snackbar("Số lượng sản phẩm", "Bạn không thể giảm thêm được nữa!", backgroundColor: AppColors.mainColor, colorText: Colors.white);
       if (_ionCartItems > 0) {
         _quantity = -_ionCartItems;
         return _quantity;
@@ -58,7 +58,7 @@ class PopularProductController extends GetxController {
       return 0;
     } else if ((_ionCartItems + quantity) > 20) {
       // Xabar beradi.20 dan kop bolsa
-      Get.snackbar("Item count", "You can't add more !", backgroundColor: AppColors.mainColor, colorText: Colors.white);
+      Get.snackbar("Số lượng sản phẩm", "Bạn không thể thêm nữa!", backgroundColor: AppColors.mainColor, colorText: Colors.white);
       return 20;
     } else {
       return quantity;

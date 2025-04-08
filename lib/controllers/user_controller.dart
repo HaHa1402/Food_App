@@ -24,7 +24,7 @@ class UserController extends GetxController implements GetxService {
     if (response.statusCode == 200) {
       _userModel = UserModel.fromJson(response.body);
       _isLoading = true;
-      responseModel = ResponseModel(true, "successfully");
+      responseModel = ResponseModel(true, "thành công");
     } else {
       responseModel = ResponseModel(false, response.statusText!);
     }

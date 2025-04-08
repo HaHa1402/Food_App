@@ -4,6 +4,7 @@ import 'package:food_delivery_app/pages/auth/sign_in_page.dart';
 import 'package:food_delivery_app/pages/cart/cart_history.dart';
 import 'package:food_delivery_app/pages/home/main_food_page.dart';
 import 'package:food_delivery_app/utils/colors.dart';
+import 'package:food_delivery_app/pages/cart/cart_page.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -19,8 +20,10 @@ class _HomePageState extends State<HomePage> {
   List pages = [
     MainFoodPage(),
     SignInPage(),
+      CartPage(), 
     CartHistory(),
     AccountPage(),
+     
   ];
   void onTapNav(int index) {
     setState(() {
@@ -43,8 +46,9 @@ class _HomePageState extends State<HomePage> {
         onTap: onTapNav,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: "home"),
-          BottomNavigationBarItem(icon: Icon(Icons.archive), label: "history"),
+          BottomNavigationBarItem(icon: Icon(Icons.archive), label: "login"),
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: "cart"),
+            BottomNavigationBarItem(icon: Icon(Icons.access_time), label: "historycart"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "me"),
         ],
       ),
