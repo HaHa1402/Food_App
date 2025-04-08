@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:food_delivery_app/base/no_data_pages.dart';
 import 'package:food_delivery_app/controllers/cart_controller.dart';
+import 'package:food_delivery_app/model/cart_model.dart';
+import 'package:food_delivery_app/model/product_model.dart';
 import 'package:food_delivery_app/utils/app_constants.dart';
 import 'package:food_delivery_app/utils/colors.dart';
 import 'package:food_delivery_app/utils/dimensions.dart';
@@ -12,6 +14,7 @@ import 'package:food_delivery_app/widgets/small.text.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -22,6 +25,14 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   Map<String, dynamic>? paymentIntent;
+
+  void safeAddToCart(ProductModel? product, int quantity) {
+    if (product != null) {
+      Get.find<CartController>().addItem(product, quantity);
+    } else {
+      print("⚠️ Product is null, không thể thêm vào giỏ.");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +47,7 @@ class _CartPageState extends State<CartPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
+                  onTap: () => Get.back(),
                   child: AppIcon(
                     icon: Icons.arrow_back_ios,
                     iconColor: Colors.white,
@@ -48,9 +57,7 @@ class _CartPageState extends State<CartPage> {
                 ),
                 SizedBox(width: Dimensions.width20 * 5),
                 GestureDetector(
-                  onTap: () {
-                    Get.toNamed('/'); // Route to home
-                  },
+                  onTap: () => Get.toNamed('/'),
                   child: AppIcon(
                     icon: Icons.home_outlined,
                     iconColor: Colors.white,
@@ -90,7 +97,8 @@ class _CartPageState extends State<CartPage> {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: NetworkImage(
-                                          '${AppConstants.BASE_URL}${AppConstants.UPLOAD_URL}${cartItem.img}'),
+                                        '${AppConstants.BASE_URL}${AppConstants.UPLOAD_URL}${cartItem.img}',
+                                      ),
                                       fit: BoxFit.cover,
                                     ),
                                     borderRadius: BorderRadius.circular(15),
@@ -105,31 +113,21 @@ class _CartPageState extends State<CartPage> {
                                     BigText(text: cartItem.name ?? ''),
                                     SmallText(text: "Cay"),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         BigText(
-                                          text:
-                                              '${NumberFormat("#,###", "vi_VN").format((cartItem.price ?? 0) * 1000)} vnđ',
+                                          text: '${NumberFormat("#,###", "vi_VN").format((cartItem.price ?? 0) * 1000)} vnđ',
                                           color: Colors.redAccent,
                                         ),
                                         Row(
                                           children: [
                                             IconButton(
-                                              onPressed: () {
-                                                _cartController.addItem(
-                                                    cartItem.product!, -1);
-                                              },
+                                              onPressed: () => safeAddToCart(cartItem.product, -1),
                                               icon: Icon(Icons.remove),
                                             ),
-                                            BigText(
-                                              text: cartItem.quantity.toString(),
-                                            ),
+                                            BigText(text: cartItem.quantity.toString()),
                                             IconButton(
-                                              onPressed: () {
-                                                _cartController.addItem(
-                                                    cartItem.product!, 1);
-                                              },
+                                              onPressed: () => safeAddToCart(cartItem.product, 1),
                                               icon: Icon(Icons.add),
                                             ),
                                           ],
@@ -164,20 +162,15 @@ class _CartPageState extends State<CartPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     BigText(
-                      text:
-                          "${NumberFormat("#,###", "vi_VN").format(cartController.totalAmount * 1000)} vnđ",
+                      text: "${NumberFormat("#,###", "vi_VN").format(cartController.totalAmount * 1000)} vnđ",
                       color: Colors.black,
                     ),
                     GestureDetector(
                       onTap: () async {
-                        await makePayment(
-                          (cartController.totalAmount * 1000).toString(),
-                          'vnd',
-                        );
+                        await makePayment((cartController.totalAmount * 1000).toString(), 'vnd');
                       },
                       child: Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                         decoration: BoxDecoration(
                           color: AppColors.mainColor,
                           borderRadius: BorderRadius.circular(15),
@@ -197,6 +190,12 @@ class _CartPageState extends State<CartPage> {
     try {
       print("Tạo payment intent với số tiền: $amount $currency");
       paymentIntent = await createPaymentIntent(amount, currency);
+
+      if (paymentIntent == null || !paymentIntent!.containsKey('client_secret')) {
+        print("❌ Không thể tạo payment intent hoặc client_secret không hợp lệ.");
+        return;
+      }
+
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
           paymentIntentClientSecret: paymentIntent!['client_secret'],
@@ -204,6 +203,7 @@ class _CartPageState extends State<CartPage> {
           merchantDisplayName: 'FoodApp',
         ),
       );
+
       await displayPaymentSheet();
     } catch (e) {
       print("Lỗi thanh toán: $e");
@@ -221,6 +221,41 @@ class _CartPageState extends State<CartPage> {
     try {
       await Stripe.instance.presentPaymentSheet();
       print("Thanh toán thành công");
+
+      CartController cartController = Get.find<CartController>();
+      String userId = 'test1@gmail.com';
+      String orderId = DateTime.now().millisecondsSinceEpoch.toString();
+
+      List<CartModel> cartItems = cartController.getItems.map((item) {
+        return CartModel(
+          id: item.id ?? 0,
+          name: item.name ?? '',
+          quantity: item.quantity ?? 0,
+          price: item.price ?? 0,
+          img: item.img ?? '',
+          isExit: item.isExit ?? false,
+          time: item.time ?? '',
+          product: item.product != null ? ProductModel.fromJson(item.product!.toJson()) : null,
+        );
+      }).toList();
+
+      CartModel order = CartModel(
+        id: int.tryParse(orderId),
+        name: 'Order $orderId',
+        price: cartController.totalAmount.toInt(),
+        img: '',
+        quantity: cartItems.length,
+        isExit: true,
+        time: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+        product: null,
+      );
+
+      await saveOrderToServer(order, userId, orderId);
+      cartController.addToHistory();
+      cartController.clear();
+
+      Get.offAllNamed('/');
+
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
@@ -228,6 +263,7 @@ class _CartPageState extends State<CartPage> {
           content: Icon(Icons.check_circle, color: Colors.green, size: 80),
         ),
       );
+
       setState(() {
         paymentIntent = null;
       });
@@ -243,34 +279,57 @@ class _CartPageState extends State<CartPage> {
     }
   }
 
-  Future<Map<String, dynamic>> createPaymentIntent(
-    String amount, String currency) async {
-  try {
-    Map<String, dynamic> body = {
-      'amount': amount,
-      'currency': currency,
-      'payment_method_types[]': 'card',
-    };
+  Future<void> saveOrderToServer(CartModel order, String userId, String orderId) async {
+    try {
+      if (order == null || userId == null || orderId == null) {
+        print("❌ Dữ liệu đơn hàng không hợp lệ.");
+        return;
+      }
 
-    var response = await http.post(
-      Uri.parse('https://api.stripe.com/v1/payment_intents'),
-      headers: {
-        'Authorization': 'Bearer sk_test_51RBAS5PTYhy9W7L6fLElQlbNRr8S9uJ6bLbazNyz66xLJHPhHeXH3NU7xptfkkoZMcwIVtoPlinJpQ0DnHrQtcMQ00oEpFAUCh', // <-- Sửa lại khóa secret key của bạn ở đây
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: body,
-    );
+      var orderData = {
+        ...order.toJson(),
+        "userId": userId,
+        "orderId": orderId,
+      };
 
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      print("Stripe API error: ${response.body}");
-      throw Exception('Failed to create payment intent: ${response.body}');
+      if (orderData.values.any((value) => value == null)) {
+        print("❌ Dữ liệu đơn hàng không hợp lệ, có giá trị null.");
+        return;
+      }
+
+      await FirebaseFirestore.instance.collection('order_history').add(orderData);
+      print("🟢 Đơn hàng đã được lưu thành công.");
+    } catch (e) {
+      print("❌ Lỗi lưu đơn hàng vào Firestore: $e");
     }
-  } catch (err) {
-    print("Lỗi khi gọi API: $err");
-    throw Exception('Không thể tạo payment intent');
   }
-}
 
+  Future<Map<String, dynamic>> createPaymentIntent(String amount, String currency) async {
+    try {
+      Map<String, dynamic> body = {
+        'amount': amount,
+        'currency': currency,
+        'payment_method_types[]': 'card',
+      };
+
+      var response = await http.post(
+        Uri.parse('https://api.stripe.com/v1/payment_intents'),
+        headers: {
+          'Authorization': 'Bearer sk_test_51RBAS5PTYhy9W7L6fLElQlbNRr8S9uJ6bLbazNyz66xLJHPhHeXH3NU7xptfkkoZMcwIVtoPlinJpQ0DnHrQtcMQ00oEpFAUCh',
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        print("Stripe API Error: ${response.body}");
+        return {};
+      }
+    } catch (e) {
+      print("Lỗi tạo payment intent: $e");
+      return {};
+    }
+  }
 }

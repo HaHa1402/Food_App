@@ -1,4 +1,3 @@
-
 import 'package:food_delivery_app/model/product_model.dart';
 
 class CartModel {
@@ -22,26 +21,31 @@ class CartModel {
     this.product,
   });
 
-  CartModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    price = json['price'];
-    img = json['img'];
-    quantity = json['quantity'];
-    isExit = json['isExit'];
-    time = json['time'];
-    product = ProductModel.fromJson(json['product']);
+  factory CartModel.fromJson(Map<String, dynamic> json) {
+    return CartModel(
+      id: json['id'],
+      name: json['name'],
+      price: json['price'],
+      img: json['img'],
+      quantity: json['quantity'],
+      isExit: json['isExit'],
+      time: json['time'],
+      product: json['product'] != null
+          ? ProductModel.fromJson(json['product'])
+          : null,
+    );
   }
+
   Map<String, dynamic> toJson() {
     return {
-      "id": this.id,
-      "name": this.name,
-      "price": this.price,
-      "img": this.img,
-      "quantity": this.quantity,
-      "isExit": this.isExit,
-      "time": this.time,
-      "product ": this.product!.toJson(),
+      "id": id,
+      "name": name,
+      "price": price,
+      "img": img,
+      "quantity": quantity,
+      "isExit": isExit,
+      "time": time,
+      "product": product?.toJson(), // dùng ? để tránh lỗi nếu null
     };
   }
 }
